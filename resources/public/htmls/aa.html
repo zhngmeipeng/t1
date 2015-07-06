@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style type="text/css">
+    td{border-bottom: solid 1px gray}
+    .version {
+        color: blue;
+    }
+    .changeCssEven{
+        background-color: greenyellow;
+    }
+    .changeCssOdd{
+        background-color: sandybrown;
+    }
+    .changeCssOne{
+        background-color: darkolivegreen;
+    }
+    #count li{float:left;width:25px;height:20px;cursor:pointer;margin-right:5px;overflow:hidden;background:#F90;opacity:0.7;filter:alpha(opacity=70);}
+</style>
+<script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+    var pno;
+    window.onload = function () {
+        var str = '<table  width="1000px" cellspacing="0" id="tableId" ><tr class="solid"><td width="5%">id</td><td>name</td><td>pop</td><td width="10%">percentage</td><td width="10%">date</td><td>url</td></tr>';
+        $.ajaxSettings.async = false;//采用同步
+        //用ajax取出t1.json
+        $.getJSON('terr.json', function (data) {
+            $.each(data, function (idex, item) {
+                str = str + '<tr class="solid"><td class="version" onclick="javascript:fnPoint1(' + '\'' + item.id + '\'' + ')">' + item.id + '</td><td>'
+                        + item.name + '</td><td>' + item.pop + '</td><td>' + item.percentage + '</td><td>' + item.date + '</td><td>' + item.url + '</td></tr>';
+            });
+            str = str + '</table>';
+            $('#tableTest').html(str);
+            mm = true;
+        });
+
+        var iScore = isStar = 0;
+        var firstOne = document.getElementsByTagName('tr');
+        for (var i = 0; i < firstOne.length; i++) {
+            firstOne[i].index = i;
+            if (i % 2 != 0) {
+                firstOne[i].className = 'changeCssEven';//基数行的颜色
+            } else {
+                firstOne[i].className = 'changeCssOdd';//偶数行的颜色基数
+            }
+            firstOne[i].onmouseout = function () {
+                OchangeOut(this.index);//鼠标移出时颜色改变
+            }
+            firstOne[i].onmouseover = function () {
+                OchangeOver(this.index);
+                ;//鼠标移入时颜色改变
+            }
+            var oTd = firstOne[i].getElementsByTagName('td');
+            function OchangeOut(oOut) {
+                isStar = oOut;
+                var oTr = document.getElementsByTagName('tr')[isStar];
+                if (isStar % 2 != 0 && isStar != 0) {
+                    oTr.className = 'changeCssEven';
+                } else {
+                    oTr.className = 'changeCssOdd';
+                }
+            }
+
+            function OchangeOver(oOver) {
+                isStar = oOver;
+                var oTr = document.getElementsByTagName('tr')[isStar];
+                oTr.className = 'changeCssOne';
+            }
+        }
+        var tableI = document.getElementById('tableId');
+        var rowNum = tableI.rows.length;                                          //获取table的行数
+        var countNum;
+        var showNum = 10;
+        pno=1;
+        var ye = '';
+            countNum = Math.ceil(rowNum / showNum) ;
+        for (var i = 0; i < rowNum ; i++) {
+            if (i > showNum) {
+                tableI.rows[i].style.display = 'none';                    //大于100的行数隐藏掉
+            }
+        }
+       // ye=ye+'<span  onclick="javascript:dopage('+'\''+1+'\',\''+showNum+'\''+')">上一页&nbsp;</span><span onclick="javasript:dopage('+'\''+2+'\',\''+showNum+'\''+')">下一页</span>';
+      for(var n=1;n<countNum+1;n++){
+          ye=ye+'<li>'+n+'</li>';
+      }
+        $('#count').html(ye);
+        var Oul=document.getElementById('count');
+        var Oli=Oul.getElementsByTagName('li');
+        for(var j=0;j<countNum;j++){
+            Oli[j].index=j+1;
+            Oli[j].onclick=function(){
+               dopage(this.index,showNum);
+            }
+        }
+
+    };
+    function fnPoint1(param){
+        alert('oldid:'+param);//点击第一行时弹出内容
+    }
+
+    function dopage(para,showNum){
+        var tableII=document.getElementById('tableId');
+        var rowNum=tableII.rows.length;
+        /*        if(para<=0){
+         para=1;
+         }*/
+        /*        if(param>rowNum){
+         param=rowNum;
+         }*/
+
+        var start=(para-1)*showNum+1;
+        for(var i=0;i<rowNum;i++){
+            if((i>=(start))&&(i<(start+showNum))||i==0){
+                tableII.rows[i].style.display='';
+            }else{
+                tableII .rows[i].style.display='none';
+            }
+        }
+    }
+
+</script>
+<body>
+<div id="tableTest" ></div>
+<div id="yeshu"><ul id="count"></ul>
+</div>
+
+</body>
+</html>
