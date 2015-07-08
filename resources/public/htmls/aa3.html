@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <!-- <script type="text/javascript" src="../css/example.css"></script>-->
+    <script type="text/javascript" src="../js/ext-all.js"></script>
+    <script type="text/javascript" src="../js/TTT.js"></script>
+    <meta charset="UTF-8">
+    <title></title>
+<body>
+<script type="text/javascript">
+    Ext.onReady(function(){
+        // 初始化工具提示
+        Ext.tip.QuickTipManager.init();
+        // 创建一个Ext.data.Store对象
+        var userStore = Ext.create('Ext.data.Store',
+                {
+                    // 直接使用data指定数据
+                    data : [
+                        {
+                            "name": "Afghanistan",
+                            "url": "http://en.wikipedia.org/wiki/Afghanistan",
+                            "pop": 25500100,
+                            "date": "2013-01-01",
+                            "percentage": 0.36,
+                            "id": 1
+                        },
+                        {
+                            "name": "Albania",
+                            "url": "http://en.wikipedia.org/wiki/Albania",
+                            "pop": 2831741,
+                            "date": "2011-10-01",
+                            "percentage": 0.04,
+                            "id": 2
+                        },
+                        {
+                            "name": "Algeria",
+                            "url": "http://en.wikipedia.org/wiki/Algeria",
+                            "pop": 37100000,
+                            "date": "2012-01-01",
+                            "percentage": 0.53,
+                            "id": 3
+                        }
+                    ],
+                    fields:[                                                                //要显示的项
+                        'name' , 'url',
+                        {name: 'date', type: 'date', format:'Y-m-d'},
+                        'percentage','id','pop'
+                    ]
+                });
+        Ext.create('Ext.grid.Panel', {
+           // title: '查看图书',
+            id:'table',
+            region:'center',
+            loadMask: true,
+            store: userStore,
+            trackMouseOver:true,
+            animCollapse: true,
+            width:750, // 指定表单宽度
+            renderTo: Ext.getBody(),
+            // 定义该表格包含的所有数据列
+            columns: [
+                { text: 'id' , xtype: 'rownumberer' , width:30},
+                { text: 'name', dataIndex: 'name'},
+                { text: 'pop', dataIndex: 'pop'},
+                { text: 'percentage', dataIndex: 'percentage'},
+                { text: 'date', xtype: 'datecolumn',
+                    dataIndex: 'date', format:'Y年m月d日'},
+                { text: 'url', dataIndex: 'url' }
+            ],
+            width: 500,
+            forceFit: true,          //去掉后出现滚动条
+            store: userStore
+        });
+
+        Ext.create('Ext.grid.GridView', {
+            getRowClass:function(record,index)
+            {
+                alert(record);
+                //todo:缺少为每种类型配置一种颜色表示
+                if(record.get('XXX')=="0001010201")
+                    return 'yellow';
+                else
+                    return 'blue';
+            }
+        })
+    });
+</script>
+</body>
+</head>
+<body>
+
+</body>
+</html>

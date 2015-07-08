@@ -3,26 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/fenye.css">
+    <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
 </head>
-<style type="text/css">
-    td{border-bottom: solid 1px gray}
-    .version {
-        color: blue;
-    }
-    .changeCssEven{
-        background-color: greenyellow;
-    }
-    .changeCssOdd{
-        background-color: sandybrown;
-    }
-    .changeCssOne{
-        background-color: darkolivegreen;
-    }
-    #count li{float:left;width:25px;height:20px;cursor:pointer;margin-right:5px;overflow:hidden;background:#F90;opacity:0.7;filter:alpha(opacity=70);}
-</style>
-<script type="text/javascript" src="jquery-1.8.2.min.js"></script>
 <script type="text/javascript">
-    var pno;
     window.onload = function () {
         var str = '<table  width="1000px" cellspacing="0" id="tableId" ><tr class="solid"><td width="5%">id</td><td>name</td><td>pop</td><td width="10%">percentage</td><td width="10%">date</td><td>url</td></tr>';
         $.ajaxSettings.async = false;//采用同步
@@ -34,24 +18,19 @@
             });
             str = str + '</table>';
             $('#tableTest').html(str);
-            mm = true;
         });
 
         var iScore = isStar = 0;
         var firstOne = document.getElementsByTagName('tr');
+        $('tr:odd').addClass('changeCssEven');
+        $('tr:even').addClass('changeCssOdd');
         for (var i = 0; i < firstOne.length; i++) {
             firstOne[i].index = i;
-            if (i % 2 != 0) {
-                firstOne[i].className = 'changeCssEven';//基数行的颜色
-            } else {
-                firstOne[i].className = 'changeCssOdd';//偶数行的颜色基数
-            }
             firstOne[i].onmouseout = function () {
-                OchangeOut(this.index);//鼠标移出时颜色改变
+                OchangeOut(this.index);                 //鼠标移出时颜色改变
             }
             firstOne[i].onmouseover = function () {
-                OchangeOver(this.index);
-                ;//鼠标移入时颜色改变
+                OchangeOver(this.index);                //鼠标移入时颜色改变
             }
             var oTd = firstOne[i].getElementsByTagName('td');
             function OchangeOut(oOut) {
@@ -104,13 +83,6 @@
     function dopage(para,showNum){
         var tableII=document.getElementById('tableId');
         var rowNum=tableII.rows.length;
-        /*        if(para<=0){
-         para=1;
-         }*/
-        /*        if(param>rowNum){
-         param=rowNum;
-         }*/
-
         var start=(para-1)*showNum+1;
         for(var i=0;i<rowNum;i++){
             if((i>=(start))&&(i<(start+showNum))||i==0){
@@ -122,10 +94,10 @@
     }
 
 </script>
-<body>
-<div id="tableTest" ></div>
-<div id="yeshu"><ul id="count"></ul>
-</div>
-
-</body>
+    <body>
+        <div id="tableTest" ></div>
+        <div id="yeshu">
+            <ul id="count"></ul>
+        </div>
+    </body>
 </html>

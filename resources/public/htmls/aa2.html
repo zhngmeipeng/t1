@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="../css/fenye.css">
+        <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="../js/TTT.js"></script>
+    </head>
+    <script type="text/javascript">
+        var o={
+           // data:myData,
+            columns: [
+                {text: '序号',  dataIndex:'id'},
+                {text: '姓名',  dataIndex:'name'},
+                {text: 'pop',  dataIndex:'pop'},
+                {text: '百分比',  dataIndex:'percentage'},
+                {text: '时间',  dataIndex:'date'},
+                {text: '地址',  dataIndex:'url'}
+            ]
+        };
+            myGrid('terr.json',o);
+    </script>
+    <body>
+       <div id="tableTest" ></div>
+        <div id="yeshu">
+            <ul id="count"></ul>
+        </div>
+    </body>
+</html>
